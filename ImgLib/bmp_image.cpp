@@ -56,6 +56,10 @@ static int GetBMPStride(int w) {
 
 bool SaveBMP(const Path& file, const Image& image) {
     ofstream out(file, ios::binary);
+    if (!out.is_open()) {
+        return false;
+    }
+
     const int32_t h = image.GetHeight();
     const int32_t w = image.GetWidth();
     const int32_t stride = GetBMPStride(w);
@@ -91,6 +95,9 @@ bool SaveBMP(const Path& file, const Image& image) {
 
 Image LoadBMP(const Path& file) {
     ifstream ifs(file, ios::binary);
+    if (!ifs.is_open()) {
+        return {};
+    }
 
     BitmapFileHeader file_header;
     BitmapInfoHeader info_header;
